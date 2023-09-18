@@ -1,0 +1,380 @@
+@use '../common/colours.scss' as c;
+@use '../common/variables.scss' as v;
+
+:root {
+  font-family: v.$fontType;
+  scroll-behavior: smooth;
+  line-height: 1.8rem;
+  font-weight: v.$mainFontWeight;
+  font-size: 92%;
+  @media only screen and (min-width: v.$siteDesktopXL-Breakpoint) {
+    font-size: 105%;
+    line-height: 2.2rem;
+  }
+  // @media only screen and (min-width: v.$siteDesktopXL-Breakpoint) {
+  //   font-size: 105%;
+  // }
+}
+
+* {
+  &::selection {
+    background-color: c.$brand-400;
+    color: white;
+  }
+  &::-moz-selection {
+    background-color: c.$brand-400;
+    color: white;
+  }
+  &:focus-within {
+    outline-color: c.$brand-400;
+  }
+}
+
+body {
+  background-color: c.$pageColour;
+}
+
+h1, h2, h3 {
+  font-weight: v.$headerFontWeight;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+header, footer {
+  width: 100%;
+}
+
+a:not(.btn):hover {
+  color: c.$brand-400;
+}
+
+$headerHeight: 5rem;
+header {
+  $headerPadding: 1.2rem;
+  $linkGap: 1.4rem;
+  $linkPadding: 0rem;
+  $navFontSize: 1.2rem;
+
+  min-height: clamp(1rem, $headerHeight, 100vh + 1rem);
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  .contentContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: $headerPadding;
+    @media only screen and (min-width: v.$siteTablet-Breakpoint) {
+      align-items: end;
+    }
+    // padding-inline: 0;
+    // align-items: center;
+  }
+  button#navMenu {
+    $lineSpacing: 9px;
+    $lineWidth: 2rem;
+    $lineHeight: 4px;
+    $lineRounding: 2rem;
+    $burgerPadding: 0.6rem;
+    $burgerMargin: 1rem 0.8rem;
+    
+    width: fit-content;
+    height: fit-content;
+    padding: $burgerPadding;
+    margin-right: unset;
+    background-color: c.$navBurgerBg;
+    border-radius: v.$borderRadius;
+    z-index: 10;
+    &:hover {
+      cursor: pointer;
+    }
+    #burgerInner {
+      margin-block: $lineHeight + $lineSpacing;
+      position: relative;
+      width: $lineWidth;
+      height: $lineHeight;
+      background-color: c.$navBurgerInner;
+      border-radius: $lineRounding;
+      &::after, &::before {
+        content: '';
+        position: absolute;
+        width: $lineWidth;
+        height: $lineHeight;
+        background-color: c.$navBurgerInner;
+        border-radius: $lineRounding;
+        top: $lineSpacing;
+        left: 0;
+      }
+      &::before {
+        top: -$lineSpacing;
+      }
+    }
+  }
+  img {
+    height: calc($headerHeight - $headerPadding * 2);
+    width: fit-content;
+    position: relative;
+    z-index: 10;
+  }
+  li {
+    list-style: none;
+    padding-inline: v.$pageInlinePadding;
+    padding-block: $linkPadding;
+    //only on mobile
+    @media only screen and (max-width: v.$siteDesktop-Breakpoint_max) {
+      position: relative;
+      margin-block: $linkGap;
+      padding-inline: 0 v.$pageInlinePadding;
+      margin-inline-end: v.$pageInlinePadding;
+      &.selected::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 3px;
+        height: 100%;
+        background-color: c.$brand-500;
+      }
+      &:first-of-type {
+        margin-top: v.$defaultPaddingS;
+      }
+    }
+  }
+  nav {
+    top: 0;
+    left: 0;
+    font-size: $navFontSize;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all v.$transitionSpeedQ ease-in-out;
+    
+    //only on mobile
+    @media only screen and (max-width: v.$siteDesktop-Breakpoint_max) {
+      position: absolute;
+      width: 100%;
+      background-color: white;
+      text-align: end;
+      display: grid;
+      grid-template-rows: 0fr;
+      &.active {
+        grid-template-rows: 1fr;
+        padding-block-start: $headerHeight;
+        // padding-block-end: 1rem;
+      }
+    }
+  }
+  ul {
+    overflow: hidden;
+    margin-inline: auto;
+    width: 100%;
+    max-width: v.$siteMobile-MaxW;
+    @media only screen and (min-width: v.$siteTablet-Breakpoint) {
+      max-width: v.$siteTablet-MaxW;
+    }
+    @media only screen and (min-width: v.$siteDesktop-Breakpoint) {
+      max-width: v.$siteDesktop-MaxW;
+    }
+  }
+  @media only screen and (min-width: v.$siteDesktop-Breakpoint) {
+    button#navMenu {
+      display: none;
+    }
+    ul {
+      display: flex;
+    }
+    li {
+      margin-inline: 1rem;
+      &.selected {
+        color: c.$brand-500;
+      }
+      &:last-of-type {
+        margin-inline-end: 0;
+      }
+    }
+  }
+}
+
+footer {
+  background-color: c.$neutral-200;
+  text-align: center;
+  position: sticky;
+  top: 100vh;
+  padding-block: v.$defaultPadding;
+  margin-top: v.$defaultPadding;
+}
+
+section {
+  $sectionPadding: 2rem;
+  @media only screen and (min-width: v.$siteDesktop-Breakpoint) {
+    $sectionPadding: 3rem;
+  }
+  &:not(:first-of-type) {
+    padding-block: $sectionPadding;
+  }
+  &:nth-of-type(odd) {
+    background-color: white;
+  }
+  &:first-of-type {
+    background-color: transparent;
+    padding-top: $headerHeight + $sectionPadding;
+    padding-block-end: $sectionPadding;
+  }
+  h1 {
+    font-size: 1.8rem;
+  }
+  h2 {
+    padding-block-end: v.$defaultPadding;
+    font-size: 1.3rem;
+  }
+}
+
+input, textarea {
+  font-family: v.$fontType;
+  padding: v.$defaultPaddingS;
+  width: 100%;
+  border: 1px solid c.$neutral-300;
+  border-radius: v.$borderRadius;
+}
+
+button {
+  width: unset;
+  font-weight: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;   
+}
+
+form {
+  .formItem {
+    margin-bottom: v.$defaultPadding;
+  }
+  label {
+    display: block;
+  }
+  button[type="submit"] {
+    float: right;
+    cursor: pointer;
+  }
+  @media only screen and (min-width: v.$siteDesktop-Breakpoint) {
+    .formLineUp {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+  }
+}
+
+.mainPgHeaders {
+  .contentContainer {
+    align-items: unset;
+  }
+}
+
+.contentContainer, .logoItem, .actionItem, .buttons {
+  display: flex;
+  flex-direction: column;
+  gap: v.$defaultPadding;
+  justify-content: center;
+  align-items: center;
+}
+.actionItem {
+  text-align: center;
+  .title {
+    display: none;
+  }
+  .buttons {
+    gap: v.$defaultPaddingS;
+  }
+  .btn {
+    margin-inline: unset;
+  }
+}
+
+.contentContainer {
+  padding-inline: v.$pageInlinePadding;
+  margin-inline: auto;
+  max-width: v.$siteMobile-MaxW;
+  box-sizing: content-box;
+  @media only screen and (min-width: v.$siteTablet-Breakpoint) {
+    max-width: v.$siteTablet-MaxW;
+    // padding-inline: v.$pageInlinePaddingL;
+  }
+  @media only screen and (min-width: v.$siteDesktop-Breakpoint) {
+    max-width: v.$siteDesktop-MaxW;
+    padding-inline: v.$pageInlinePaddingL;
+  }
+  @media only screen and (min-width: v.$siteDesktopL-Breakpoint) {
+  }
+}
+
+.websiteLoader {
+  position: absolute;
+  background-color: hsl(0, 100%, 100%, 0.75);
+  inset: - v.$defaultPadding;
+  border-radius: v.$borderRadius;
+  text-align: center;
+  box-sizing: content-box;
+  display: none;
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  transition: all v.$transitionSpeedQ;
+  isolation: isolate;
+  z-index: 1;
+  &.show {
+    display: flex;
+    opacity: 1;
+  }
+  img {
+    width: 8rem;
+  }
+  &.siteLoader {
+    z-index: 500;
+  }
+}
+
+.btn {
+  $borderWidth: 1px;
+
+  padding: v.$defaultPaddingXS v.$defaultPadding;
+  border-bottom: $borderWidth solid c.$neutral-800;
+  border-radius: 50rem;
+  display: block;
+  width: fit-content;
+  margin-inline-start: auto;
+  text-transform: uppercase;
+  &_witharrow {
+    &::after {
+      content: url('../assets/icons/btn-arrow.svg');
+      display: inline-block;
+      font-weight: 500;
+      padding-left: 0.6rem;
+    }
+  }
+  &_square {
+    border-radius: unset;
+    text-transform: capitalize;
+  }
+  &_thin {
+    border: $borderWidth solid c.$neutral-800;
+    font-weight: 600;
+  }
+  &_full {
+    border: unset;
+    background-color: c.$brand-500;
+    color: c.$neutral-100;
+    font-weight: 600;
+  }
+}
+
+.highlight {
+  color: c.$brand-500;
+  font-weight: 400;
+}
+
+.title, .title_unhide {
+  font-weight: 600;
+}

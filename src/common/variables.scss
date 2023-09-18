@@ -1,0 +1,24 @@
+$fontType: 'Poppins', sans-serif;
+$mainFontWeight: 300;
+$headerFontWeight: 600;
+$transitionSpeed: 450ms;
+$transitionSpeedQ: 200ms; //default
+$pageInlinePadding: 1rem; // default
+$pageInlinePaddingL: 4rem; // for !mobile screens
+$borderRadius: 0.2rem;
+$borderRadiusL: 0.6rem;
+$borderRadiusXL: 50rem;
+$defaultPaddingXS: 0.5rem; // buttons block padding
+$defaultPaddingS: 0.8rem; 
+$defaultPadding: 1.2rem;
+
+$siteDesktopXL-MaxW: 200rem;
+$siteDesktopXL-Breakpoint: 145rem;
+$siteDesktopL-MaxW: 136rem;
+$siteDesktopL-Breakpoint: 130rem;
+$siteDesktop-MaxW: 100rem;
+$siteDesktop-Breakpoint: 64rem;
+$siteDesktop-Breakpoint_max: calc(64rem - 1px);
+$siteTablet-MaxW: 46rem;
+$siteTablet-Breakpoint: 44rem;
+$siteMobile-MaxW: 26rem;
