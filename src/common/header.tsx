@@ -1,13 +1,13 @@
-import { Link } from 'react-router-dom'
 
 export default function Header() {
-  
+  // const { currentStepIndex, steps, next, back } = useMultiStepForm([]);
+
   return (
     <header>
       <div className="contentContainer">
-        <Link to="/">&lt;</Link>
+        {/* {(currentStepIndex == 1) ? <Link to="" onClick={back} tabIndex={0}>&lt;</Link> : <span></span>} */}
         {/* <h1>App Title</h1> */}
-        <Link to="/">&gt;</Link>
+        {/* {(currentStepIndex >= (steps.length - 1)) ? <span></span> : <Link to="" onClick={next} tabIndex={0}>&gt;</Link>} */}
       </div>
     </header>
   )

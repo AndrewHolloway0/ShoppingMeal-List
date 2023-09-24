@@ -231,7 +231,7 @@ section {
   }
 }
 
-input, textarea {
+input:not([type="checkbox"]), textarea {
   font-family: v.$fontType;
   padding: v.$defaultPaddingS;
   width: 100%;

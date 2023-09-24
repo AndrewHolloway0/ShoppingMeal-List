@@ -1,0 +1,47 @@
+@use "../common/colours.scss" as c;
+@use "../common/variables.scss" as v;
+
+.checkboxOption {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  input {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+    &:checked + label {
+      background-color: c.$support-blue-400;
+      color: white;
+    }
+    &:focus-within + label {
+      // background-color: c.$support-blue-400;
+      // color: white;
+      outline: (v.$defaultPaddingS - v.$defaultPaddingXS) solid
+        c.$support-blue-500;
+      outline-offset: 2px;
+    }
+  }
+  label {
+    background-color: c.$support-blue-100;
+    width: 100%;
+    display: block;
+    padding: v.$defaultPaddingS v.$defaultPadding;
+    text-align: center;
+    border-radius: v.$siteDesktopXL-Breakpoint;
+    border: 1px solid c.$neutral-400;
+    cursor: pointer;
+  }
+}
+
+.optionList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: v.$defaultPaddingS;
+}
+
+
+.formArrows {
+  font-size: 2rem;
+  padding: v.$defaultPaddingS;
+  background-color: c.$neutral-200;
+}
