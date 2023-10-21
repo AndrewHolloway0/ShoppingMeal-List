@@ -8,6 +8,7 @@ import './styles/global.scss'
 // import Home from './pages/home'
 const Layout = lazy(() => import('./common/layout'))
 const Home = lazy(() => import('./pages/home'))
+const NewList = lazy(() => import('./pages/newlist'))
 
 // Other pages
 import NotFound from './common/404'
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path='/newlist' element={<NewList />}/>
           <Route path='*' element={<NotFound />}/>
         </Route>
       </Routes>

@@ -294,7 +294,7 @@ form {
 }
 
 .contentContainer {
-  padding-inline: v.$pageInlinePadding;
+  padding: v.$defaultPaddingXL v.$pageInlinePadding;
   margin-inline: auto;
   max-width: v.$siteMobile-MaxW;
   box-sizing: content-box;
