@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import { FormEvent, useEffect, useState } from "react";
 import axios from "axios";
-// import { experimental_useFormStatus as useFormStatus } from "react-dom";
 
 // Import Styles
 import "../styles/home.scss";
@@ -22,7 +21,12 @@ export default function Home() {
     setIsLoading(true)
     await console.log(data.values())
     setIsLoading(false)
-    // await console.log("Sumitted: "+ allData)
+    await console.log("Submited: ")
+
+    const markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+    for (const checkbox of markedCheckbox) {
+      document.body.append(checkbox.value + ' ');
+    }
   }
 
   return (
@@ -65,8 +69,13 @@ export function StepOne() {
   const [err, setErr] = useState({ isErr: "false", errMsg: "" });
 
   const [listOfMeals, setListOfMeals] = useState([{ ID: 0, short_name: "", name: "", favourited: "" }]);
+  const [listOfMealsSelected, setListOfMealsSelected] = useState<boolean[]>([])
   const [currentMealList, setCurrentMealList] = useState([{ ID: 0, short_name: "", name: "", favourited: "" }]);
   const [newSelectedMeals, setNewSelectedMeals] = useState([]);
+  
+  useEffect(() => {
+    getAllMeals();
+  }, []);
   
   const getAllMeals = async() =>  {
     setIsLoading(true);
@@ -85,7 +94,7 @@ export function StepOne() {
   
   const getSelectedMeals = async() =>  {
     axios
-      .get("http://192.168.1.90:3000/meals")
+      .get("http://192.168.1.90:3000/current")
       .then((res) => {
         setCurrentMealList(res.data)
       })
@@ -93,15 +102,50 @@ export function StepOne() {
         setErr({ isErr: "true", errMsg: err.message })
         // console.log(err.message)
       })
-      .finally(() => {
-        setIsLoading(false)
-      });
+      // .finally(() => {
+      //   setIsLoading(false)
+      // });
   };
 
   useEffect(() => {
-    getAllMeals();
-  }, []);
-  
+    let iter = 0;
+    const currentSelectedMeals:boolean[] = []
+    // console.log("--------------------\n!! ran !!")
+
+    function shallowEqualityCheck(obj1: any, obj2: any) {
+      const keys1 = Object.keys(obj1);
+      const keys2 = Object.keys(obj2);
+      if (keys1.length !== keys2.length) {
+        return false;
+      }
+      for (const key of keys1) {
+        if (obj1[key] !== obj2[key]) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    listOfMeals.forEach((e) => {
+      iter = iter + 1
+      if(currentMealList.some((item) => shallowEqualityCheck(item, e))) return currentSelectedMeals.push(true)
+      else currentSelectedMeals.push(false)
+    })
+    
+    if(iter == listOfMeals.length) {
+      console.log(currentSelectedMeals)
+      setListOfMealsSelected(currentSelectedMeals)
+      setIsLoading(false)
+    }
+  }, [currentMealList, listOfMeals]);
+
+  const swapBoolean = (position:number) => {
+    const updatedCheckedState = listOfMealsSelected.map((item, index) =>
+      index === position ? !item : item
+    );
+    setListOfMealsSelected(updatedCheckedState)
+  }
+
   return (
     <>
       {isLoading ? (
@@ -109,10 +153,10 @@ export function StepOne() {
       ) : err.isErr == "true" ? (
         <p>An error occurred: {err.errMsg}</p>
       ) : (
-        listOfMeals.map((i) => (
+        listOfMeals.map((i, index) => (
           <div key={i.ID} className="checkboxOption">
             {/* <input checked={currentList.includes(i)} type="checkbox" id={i.short_name} /> */}
-            <input type="checkbox" id={i.short_name} />
+            <input type="checkbox" checked={listOfMealsSelected[index]} id={i.short_name} onChange={() => swapBoolean(index)} />
             <label htmlFor={i.short_name}>{i.name}</label>
           </div>
         ))
