@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-type ListOfMealsType = {
-  ID: number;
-  short_name: string;
-  name: string;
-  favourited: string;
-};
+// type ListOfMealsType = {
+//   ID: number;
+//   short_name: string;
+//   name: string;
+//   favourited: string;
+// };
 
-type InitialListOfMealsType = {
-  initialListOfMeals: ListOfMealsType[];
-};
+// type InitialListOfMealsType = {
+//   initialListOfMeals: ListOfMealsType[];
+// };
 
 export default function Home() {
   const [listOfMeals, setListOfMeals] = useState([{ ID: 0, short_name: "", name: "", favourited: "" }]);

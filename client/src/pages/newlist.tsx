@@ -1,6 +1,6 @@
 "use client"
 import { Link } from "react-router-dom";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 // Import Styles
@@ -23,10 +23,10 @@ export default function Home() {
     setIsLoading(false)
     await console.log("Submited: ")
 
-    const markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
-    for (const checkbox of markedCheckbox) {
-      document.body.append(checkbox.value + ' ');
-    }
+    // const markedCheckbox = document.querySelectorAll('input[type="checkbox"]:checked');
+    // for (const checkbox of markedCheckbox) {
+    //   document.body.append(checkbox.value + ' ');
+    // }
   }
 
   return (
@@ -71,7 +71,7 @@ export function StepOne() {
   const [listOfMeals, setListOfMeals] = useState([{ ID: 0, short_name: "", name: "", favourited: "" }]);
   const [listOfMealsSelected, setListOfMealsSelected] = useState<boolean[]>([])
   const [currentMealList, setCurrentMealList] = useState([{ ID: 0, short_name: "", name: "", favourited: "" }]);
-  const [newSelectedMeals, setNewSelectedMeals] = useState([]);
+  // const [newSelectedMeals, setNewSelectedMeals] = useState([]);
   
   useEffect(() => {
     getAllMeals();
